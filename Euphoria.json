@@ -187,6 +187,16 @@
         "name": "assets\\GreenBox.png",
         "smoothed": false,
         "userAdded": true
+      },
+      {
+        "file": "assets/The Carnival of the Animals Aquarium.mp3",
+        "kind": "audio",
+        "metadata": "",
+        "name": "assets\\The Carnival of the Animals Aquarium.mp3",
+        "preloadAsMusic": false,
+        "preloadAsSound": false,
+        "preloadInCache": false,
+        "userAdded": true
       }
     ],
     "resourceFolders": []
@@ -290,7 +300,7 @@
       "name": "Play",
       "r": 74,
       "standardSortMethod": true,
-      "stopSoundsOnStartup": true,
+      "stopSoundsOnStartup": false,
       "title": "",
       "v": 74,
       "uiSettings": {
@@ -1848,7 +1858,6 @@
           "colorG": 176,
           "colorR": 74,
           "creationTime": 0,
-          "folded": true,
           "name": "In the beginning",
           "source": "",
           "type": "BuiltinCommonInstructions::Group",
@@ -1885,6 +1894,15 @@
                     "\"Level_\" + GlobalVariableString(g_level)",
                     "",
                     ""
+                  ]
+                },
+                {
+                  "type": {
+                    "value": "PreloadSound"
+                  },
+                  "parameters": [
+                    "",
+                    "assets\\The Carnival of the Animals Aquarium.mp3"
                   ]
                 }
               ],
@@ -2577,7 +2595,21 @@
                   ]
                 }
               ],
-              "actions": [],
+              "actions": [
+                {
+                  "type": {
+                    "value": "PlaySoundCanal"
+                  },
+                  "parameters": [
+                    "",
+                    "assets\\The Carnival of the Animals Aquarium.mp3",
+                    "0",
+                    "yes",
+                    "10",
+                    "1"
+                  ]
+                }
+              ],
               "events": [
                 {
                   "colorB": 228,
@@ -2922,11 +2954,13 @@
           "colorG": 176,
           "colorR": 74,
           "creationTime": 0,
+          "folded": true,
           "name": "Movement",
           "source": "",
           "type": "BuiltinCommonInstructions::Group",
           "events": [
             {
+              "folded": true,
               "type": "BuiltinCommonInstructions::Standard",
               "conditions": [
                 {
@@ -3237,6 +3271,24 @@
                             "",
                             "",
                             ""
+                          ]
+                        },
+                        {
+                          "type": {
+                            "value": "Visible"
+                          },
+                          "parameters": [
+                            "PushBlockObstacle"
+                          ]
+                        },
+                        {
+                          "type": {
+                            "value": "Opacity"
+                          },
+                          "parameters": [
+                            "PushBlockObstacle",
+                            ">",
+                            "128"
                           ]
                         }
                       ],
@@ -3668,7 +3720,6 @@
           "colorG": 176,
           "colorR": 74,
           "creationTime": 0,
-          "folded": true,
           "name": "Switch blocks",
           "source": "",
           "type": "BuiltinCommonInstructions::Group",
@@ -3732,35 +3783,6 @@
                     "textR": 0
                   },
                   "comment": "ToDo - change the update g_gameState = \"died\""
-                },
-                {
-                  "type": "BuiltinCommonInstructions::Standard",
-                  "conditions": [
-                    {
-                      "type": {
-                        "value": "CollisionNP"
-                      },
-                      "parameters": [
-                        "Player",
-                        "SwitchBlock",
-                        "",
-                        "",
-                        "yes"
-                      ]
-                    }
-                  ],
-                  "actions": [
-                    {
-                      "type": {
-                        "value": "Scene"
-                      },
-                      "parameters": [
-                        "",
-                        "\"Play\"",
-                        ""
-                      ]
-                    }
-                  ]
                 },
                 {
                   "type": "BuiltinCommonInstructions::Standard",
@@ -3912,6 +3934,86 @@
                         "250",
                         "",
                         "yes"
+                      ]
+                    }
+                  ],
+                  "events": [
+                    {
+                      "type": "BuiltinCommonInstructions::Standard",
+                      "conditions": [
+                        {
+                          "type": {
+                            "value": "CollisionNP"
+                          },
+                          "parameters": [
+                            "PlayerHitBox",
+                            "SwitchBlock",
+                            "",
+                            "",
+                            "yes"
+                          ]
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": {
+                            "value": "Scene"
+                          },
+                          "parameters": [
+                            "",
+                            "\"Play\"",
+                            ""
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BuiltinCommonInstructions::Standard",
+                      "conditions": [
+                        {
+                          "type": {
+                            "value": "CollisionNP"
+                          },
+                          "parameters": [
+                            "PushBlock",
+                            "SwitchBlock",
+                            "",
+                            "",
+                            ""
+                          ]
+                        },
+                        {
+                          "type": {
+                            "value": "Sticker::IsStuck"
+                          },
+                          "parameters": [
+                            "",
+                            "PushBlockPlatform",
+                            "Sticker",
+                            "PushBlock",
+                            ""
+                          ]
+                        }
+                      ],
+                      "actions": [
+                        {
+                          "type": {
+                            "value": "Delete"
+                          },
+                          "parameters": [
+                            "PushBlockPlatform",
+                            ""
+                          ]
+                        },
+                        {
+                          "type": {
+                            "value": "Delete"
+                          },
+                          "parameters": [
+                            "PushBlock",
+                            ""
+                          ]
+                        }
                       ]
                     }
                   ]
@@ -9188,8 +9290,8 @@
           "name": "Pill",
           "persistentUuid": "ec426455-a489-4832-80cc-f89e105d6aa0",
           "width": 16,
-          "x": 453,
-          "y": 117,
+          "x": 449,
+          "y": 96,
           "zOrder": 15,
           "numberProperties": [],
           "stringProperties": [],
@@ -9211,8 +9313,8 @@
           "name": "Pill",
           "persistentUuid": "ae40ddc1-f77c-4d0a-a15b-82e43000fc39",
           "width": 16,
-          "x": 443,
-          "y": 411,
+          "x": 469,
+          "y": 443,
           "zOrder": 15,
           "numberProperties": [],
           "stringProperties": [],
@@ -9353,30 +9455,14 @@
           "angle": 0,
           "customSize": true,
           "depth": 0,
-          "height": 80,
+          "height": 96,
           "layer": "",
           "name": "WhiteBlock",
           "persistentUuid": "85d3e088-b675-4d70-a379-e6f60f8eb6b3",
-          "width": 288,
-          "x": 336,
-          "y": 144,
+          "width": 368,
+          "x": 256,
+          "y": 128,
           "zOrder": 18,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": true,
-          "depth": 0,
-          "height": 32,
-          "layer": "",
-          "name": "SwitchBlock",
-          "persistentUuid": "9905ff88-6ede-4de8-a5f3-5ad72e074d92",
-          "width": 64,
-          "x": 304,
-          "y": 96,
-          "zOrder": 24,
           "numberProperties": [],
           "stringProperties": [],
           "initialVariables": []
@@ -9389,7 +9475,7 @@
           "name": "Teleporter",
           "persistentUuid": "da68cebe-d261-4a30-9490-cbb1d2ad431f",
           "width": 0,
-          "x": 48,
+          "x": 54,
           "y": 99,
           "zOrder": 25,
           "numberProperties": [],
@@ -9415,61 +9501,13 @@
           "angle": 0,
           "customSize": true,
           "depth": 0,
-          "height": 58,
-          "layer": "",
-          "name": "WhiteBlock",
-          "persistentUuid": "9c14fa79-2131-45d8-9afb-fb14947f2158",
-          "width": 80,
-          "x": 320,
-          "y": 16,
-          "zOrder": 27,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": true,
-          "depth": 0,
-          "height": 32,
-          "layer": "",
-          "name": "SwitchBlock",
-          "persistentUuid": "4d5f0081-49df-4f46-b5b3-3f3389946537",
-          "width": 64,
-          "x": 224,
-          "y": 132,
-          "zOrder": 24,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": true,
-          "depth": 0,
-          "height": 32,
-          "layer": "",
-          "name": "WhiteBlock",
-          "persistentUuid": "6f9e58ca-0351-4d05-befc-d1903286cd25",
-          "width": 64,
-          "x": 336,
-          "y": 112,
-          "zOrder": 28,
-          "numberProperties": [],
-          "stringProperties": [],
-          "initialVariables": []
-        },
-        {
-          "angle": 0,
-          "customSize": true,
-          "depth": 0,
           "height": 32,
           "layer": "",
           "name": "SwitchBlock",
           "persistentUuid": "781385e4-2616-445d-8487-ddd026ae021d",
           "width": 64,
-          "x": 144,
-          "y": 170,
+          "x": 64,
+          "y": 160,
           "zOrder": 24,
           "numberProperties": [],
           "stringProperties": [],
@@ -9493,7 +9531,7 @@
               "folded": true,
               "name": "Text",
               "type": "string",
-              "value": "Teamwork for the win"
+              "value": "Teamwork will get you far"
             }
           ]
         }
@@ -9906,6 +9944,22 @@
           "x": 112,
           "y": 416,
           "zOrder": 28,
+          "numberProperties": [],
+          "stringProperties": [],
+          "initialVariables": []
+        },
+        {
+          "angle": 0,
+          "customSize": true,
+          "depth": 0,
+          "height": 32,
+          "layer": "",
+          "name": "SwitchBlock",
+          "persistentUuid": "639ef7de-50fb-4be8-af0a-eb738312aaa7",
+          "width": 32,
+          "x": 192,
+          "y": 432,
+          "zOrder": 29,
           "numberProperties": [],
           "stringProperties": [],
           "initialVariables": []
